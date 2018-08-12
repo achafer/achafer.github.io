@@ -8,7 +8,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> psql -U postgres drupal7 &lt; drupal.bak</span><br></pre></td></tr></table></figure>
 <p><a href="https://www.postgresql.org/docs/10/static/app-psql.html" target="_blank" rel="noopener">官方文档</a></p>
 <h2 id="几个聚合函数"><a href="#几个聚合函数" class="headerlink" title="几个聚合函数"></a>几个聚合函数</h2><p>array_agg，官方有两种使用方法分别是</p>
-<p><img src="/Users/jeffery/code/exp/blog/blog/source/images/postgresql-array_agg.png" alt=""></p>
+<p><img src="/images/postgresql-array_agg.png" alt=""></p>
 <p><code>string_agg(*expression*,*delimiter*)</code>,参数(<code>text</code>, <code>text</code>) or (<code>bytea</code>, <code>bytea</code>)，使用输入值串接成字符串，用分隔符分隔</p>
 <p><code>json_agg</code>和arrat_agg功能类似，只不过聚合成了json数组</p>
 <p><a href="https://www.postgresql.org/docs/10/static/functions-aggregate.html" target="_blank" rel="noopener">全部聚合函数文档</a></p>
