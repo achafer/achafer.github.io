@@ -1,0 +1,86 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title>Postgres中的JSON操作 · 远山淡影</title><meta name="description" content="Postgres中的JSON操作 - 阿扯"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/gandalfr.css"><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/solarized-light.css"><link rel="search" type="application/opensearchdescription+xml" href="https://blog.ache.fun/atom.xml" title="远山淡影"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/lion.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/links/" target="_self" class="nav-list-link">LINKS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Postgres中的JSON操作</h1><div class="tags"><a href="/tags/数据库/" class="tag-title">#数据库</a><a href="/tags/PostgreSQL/" class="tag-title">#PostgreSQL</a></div><div class="post-info">Sep 2, 2018</div><div class="post-content"><p>记录下Postgres的JSON相关操作</p>
+<h3 id="准备表结构和数据"><a href="#准备表结构和数据" class="headerlink" title="准备表结构和数据"></a>准备表结构和数据</h3><p>表结构</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> orders (</span><br><span class="line"> <span class="keyword">ID</span> <span class="built_in">serial</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line"> info <span class="keyword">json</span> <span class="keyword">NOT</span> <span class="literal">NULL</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> orders (info)</span><br><span class="line"><span class="keyword">VALUES</span></span><br><span class="line"> (</span><br><span class="line"> <span class="string">'&#123; "customer": "Lily Bush", "items": [&#123;"product": "Diaper","qty": 24&#125;, &#123;"product": "PC","qty": 300&#125;]&#125;'</span></span><br><span class="line"> ),</span><br><span class="line"> (</span><br><span class="line"> <span class="string">'&#123; "customer": "Josh William", "items": [&#123;"product": "Toy Car","qty": 1&#125;, &#123;"product": "NoteBook","qty": 2&#125;]&#125;'</span></span><br><span class="line"> ),</span><br><span class="line"> (</span><br><span class="line"> <span class="string">'&#123; "customer": "Mary Clark", "items": [&#123;"product": "Toy Train","qty": 2&#125;]&#125;'</span></span><br><span class="line"> );</span><br></pre></td></tr></table></figure>
+<p><img src="/images/pg-json-query-response0.png" alt=""></p>
+<h3 id="查询JSON数据"><a href="#查询JSON数据" class="headerlink" title="查询JSON数据"></a>查询JSON数据</h3><h5 id="操作符"><a href="#操作符" class="headerlink" title="操作符"></a>操作符</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">Operator</th>
+<th>Right Operand Type</th>
+<th>Description</th>
+<th style="text-align:center">Example</th>
+<th style="text-align:center">Example Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>-&gt;</code></td>
+<td><code>int</code></td>
+<td>Get JSON array element (indexed from zero, negative integers count from the end)</td>
+<td style="text-align:center"><code>&#39;[{&quot;a&quot;:&quot;foo&quot;},{&quot;b&quot;:&quot;bar&quot;},{&quot;c&quot;:&quot;baz&quot;}]&#39;::json-&gt;2</code></td>
+<td style="text-align:center"><code>{&quot;c&quot;:&quot;baz&quot;}</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>-&gt;</code></td>
+<td><code>text</code></td>
+<td>Get JSON object field by key</td>
+<td style="text-align:center"><code>&#39;{&quot;a&quot;: {&quot;b&quot;:&quot;foo&quot;}}&#39;::json-&gt;&#39;a&#39;</code></td>
+<td style="text-align:center"><code>{&quot;b&quot;:&quot;foo&quot;}</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>-&gt;&gt;</code></td>
+<td><code>int</code></td>
+<td>Get JSON array element as <code>text</code></td>
+<td style="text-align:center"><code>&#39;[1,2,3]&#39;::json-&gt;&gt;2</code></td>
+<td style="text-align:center"><code>3</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>-&gt;&gt;</code></td>
+<td><code>text</code></td>
+<td>Get JSON object field as <code>text</code></td>
+<td style="text-align:center"><code>&#39;{&quot;a&quot;:1,&quot;b&quot;:2}&#39;::json-&gt;&gt;&#39;b&#39;</code></td>
+<td style="text-align:center"><code>2</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>#&gt;</code></td>
+<td><code>text[]</code></td>
+<td>Get JSON object at specified path</td>
+<td style="text-align:center"><code>&#39;{&quot;a&quot;: {&quot;b&quot;:{&quot;c&quot;: &quot;foo&quot;}}}&#39;::json#&gt;&#39;{a,b}&#39;</code></td>
+<td style="text-align:center"><code>{&quot;c&quot;: &quot;foo&quot;}</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>#&gt;&gt;</code></td>
+<td><code>text[]</code></td>
+<td>Get JSON object at specified path as <code>text</code></td>
+<td style="text-align:center"><code>&#39;{&quot;a&quot;:[1,2,3],&quot;b&quot;:[4,5,6]}&#39;::json#&gt;&gt;&#39;{a,2}&#39;</code></td>
+<td style="text-align:center"><code>3</code></td>
+</tr>
+</tbody>
+</table>
+<p>使用运算符<code>-&gt;</code>获取JSON对象的字段</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line"> info -&gt; <span class="string">'customer'</span> <span class="keyword">AS</span> customer</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line"> orders;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/pg-json-query-response1.png" alt=""></p>
+<p>使用<code>-&gt;&gt;</code>获取JSON对象的<strong>文本</strong>字段</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line"> info -&gt;&gt; <span class="string">'customer'</span> <span class="keyword">AS</span> customer</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line"> orders;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/pg-json-query-response2.png" alt=""></p>
+<p>因为<code>-&gt;</code> operator返回一个JSON对象，可以链式操作检索特定的节点。例如，以下语句返回所有售出的产品:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line"> info -&gt; <span class="string">'items'</span> -&gt; <span class="number">0</span> -&gt;&gt; <span class="string">'product'</span> <span class="keyword">as</span> product</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line"> orders</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span></span><br><span class="line"> product;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/pg-json-query-response3.png" alt=""></p>
+<p>第一个<code>info -&gt; &#39;item&#39;</code> 返回一个JSON对象，<code>info -&gt; &#39;items&#39; -&gt; 0</code>返回<code>items</code>数组中第一个元素的JSON对象，最后<code>info -&gt; &#39;items&#39; -&gt; 0 -&gt;&gt; &#39;product&#39;</code>以文本的形式返回所有的<code>product</code></p>
+<h5 id="在WHERE语句中使用操作符"><a href="#在WHERE语句中使用操作符" class="headerlink" title="在WHERE语句中使用操作符"></a>在<code>WHERE</code>语句中使用操作符</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line"> info -&gt;&gt; <span class="string">'customer'</span> <span class="keyword">AS</span> customer</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line"> orders</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line"> info -&gt; <span class="string">'items'</span> -&gt; <span class="number">0</span> -&gt;&gt; <span class="string">'product'</span> = <span class="string">'Diaper'</span></span><br></pre></td></tr></table></figure>
+<h3 id="聚合函数在JSON中的应用"><a href="#聚合函数在JSON中的应用" class="headerlink" title="聚合函数在JSON中的应用"></a>聚合函数在JSON中的应用</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line"> <span class="keyword">MIN</span> (</span><br><span class="line"> <span class="keyword">CAST</span> (</span><br><span class="line"> info -&gt; <span class="string">'items'</span> -&gt;<span class="number">0</span> -&gt;&gt; <span class="string">'qty'</span> <span class="keyword">AS</span> <span class="built_in">INTEGER</span></span><br><span class="line"> )</span><br><span class="line"> ),</span><br><span class="line"> <span class="keyword">MAX</span> (</span><br><span class="line"> <span class="keyword">CAST</span> (</span><br><span class="line"> info -&gt; <span class="string">'items'</span> -&gt;<span class="number">0</span> -&gt;&gt; <span class="string">'qty'</span> <span class="keyword">AS</span> <span class="built_in">INTEGER</span></span><br><span class="line"> )</span><br><span class="line"> ),</span><br><span class="line"> <span class="keyword">SUM</span> (</span><br><span class="line"> <span class="keyword">CAST</span> (</span><br><span class="line"> info -&gt; <span class="string">'items'</span> -&gt;<span class="number">0</span> -&gt;&gt; <span class="string">'qty'</span> <span class="keyword">AS</span> <span class="built_in">INTEGER</span></span><br><span class="line"> )</span><br><span class="line"> ),</span><br><span class="line"> <span class="keyword">AVG</span> (</span><br><span class="line"> <span class="keyword">CAST</span> (</span><br><span class="line"> info -&gt; <span class="string">'items'</span> -&gt;<span class="number">0</span> -&gt;&gt; <span class="string">'qty'</span> <span class="keyword">AS</span> <span class="built_in">INTEGER</span></span><br><span class="line"> )</span><br><span class="line"> )</span><br><span class="line"> </span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line"> orders</span><br></pre></td></tr></table></figure>
+<p><img src="/images/pg-json-query-response4.png" alt=""></p>
+<h3 id="JSON处理函数"><a href="#JSON处理函数" class="headerlink" title="JSON处理函数"></a>JSON处理函数</h3><h5 id="json-each函数"><a href="#json-each函数" class="headerlink" title="json_each函数"></a><code>json_each</code>函数</h5><p>json_each()将最外面的JSON对象扩展成一组键/值对。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line"> json_each (info)</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line"> orders;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/pg-json-query-response5.png" alt=""></p>
+<p>或者对于单条记录</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line"> * </span><br><span class="line"><span class="keyword">FROM</span> </span><br><span class="line"> json_each((<span class="keyword">select</span> info <span class="keyword">from</span> orders <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">1</span>));</span><br></pre></td></tr></table></figure>
+<p><img src="/images/pg-json-query-response6.png" alt=""></p>
+<p><code>json_each_text</code>和<code>json_each</code>效果相同，返回的是文本类型</p>
+<h5 id="json-object-key函数"><a href="#json-object-key函数" class="headerlink" title="json_object_key函数"></a><code>json_object_key</code>函数</h5><p><code>json_object_key()</code>返回最外面的JSON对象中的一组键。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line"> json_object_keys (info-&gt;<span class="string">'items'</span> -&gt;<span class="number">0</span>)</span><br><span class="line"> <span class="keyword">FROM</span></span><br><span class="line"> orders;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/pg-json-query-response7.png" alt=""></p>
+<p>更多内容参照PostgreSQL<a href="https://www.postgresql.org/docs/10/static/functions-json.html" target="_blank" rel="noopener">官方文档</a></p>
+</div></article></div></main><footer><div class="paginator"><a href="/2018/08/19/图灵机和图灵完备性/" class="next">NEXT</a></div><div class="copyright"><p>© 2018 <a href="https://blog.ache.fun">阿扯</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/MikeCoder/hexo-theme-gandalfr" target="_blank">hexo-theme-gandalfr</a>.</p></div></footer></div><script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" crossorigin="anonymous"></script><script src="//cdn.bootcss.com/jquery/3.1.1/jquery.js" crossorigin="anonymous"></script><script>$(document).ready(function() { $('pre').each(function(i, block) { hljs.highlightBlock(block); }); });</script></body></html>
