@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.ache.fun/2018/09/16/golang-%E7%9A%84Plugin/</loc>
+    
+    <lastmod>2018-09-16T14:45:26.392Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.ache.fun/2018/09/08/traefik%E4%BD%BF%E7%94%A8docker%E9%85%8D%E7%BD%AE%E5%90%8E%E7%AB%AF/</loc>
     
     <lastmod>2018-09-08T08:24:30.803Z</lastmod>
