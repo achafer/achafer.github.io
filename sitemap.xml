@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.ache.fun/2018/09/20/Ruby-%E5%A4%84%E7%90%86Xml/</loc>
+    
+    <lastmod>2018-09-20T08:23:02.077Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.ache.fun/2018/09/16/golang%E4%B8%AD%E7%9A%84Plugin/</loc>
     
-    <lastmod>2018-09-16T15:41:27.473Z</lastmod>
+    <lastmod>2018-09-16T15:41:33.918Z</lastmod>
     
   </url>
   
