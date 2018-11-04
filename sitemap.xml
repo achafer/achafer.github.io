@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.ache.fun/2018/11/04/golang%E4%B8%AD%E4%BD%BF%E7%94%A8gRPC%E7%9A%84%E6%8B%A6%E6%88%AA%E5%99%A8/</loc>
+    
+    <lastmod>2018-11-04T14:17:41.430Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.ache.fun/links/index.html</loc>
     
     <lastmod>2018-11-04T08:26:18.139Z</lastmod>
@@ -11,7 +18,7 @@
   <url>
     <loc>https://blog.ache.fun/2018/10/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AARuby-Gem/</loc>
     
-    <lastmod>2018-11-04T08:10:07.796Z</lastmod>
+    <lastmod>2018-11-04T08:14:51.311Z</lastmod>
     
   </url>
   
