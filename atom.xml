@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.ache.fun/"/>
-  <updated>2018-12-17T01:17:27.156Z</updated>
+  <updated>2018-12-11T14:00:45.427Z</updated>
   <id>https://blog.ache.fun/</id>
   
   <author>
@@ -15,30 +15,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>Golang中的Module</title>
-    <link href="https://blog.ache.fun/2018/12/16/Golang%E4%B8%AD%E7%9A%84Module/"/>
-    <id>https://blog.ache.fun/2018/12/16/Golang中的Module/</id>
-    <published>2018-12-16T13:23:33.000Z</published>
-    <updated>2018-12-17T01:17:27.156Z</updated>
-    
-    <content type="html"><![CDATA[<p>Go1.11提供了实验性的module的功能。</p><h3 id="创建Module"><a href="#创建Module" class="headerlink" title="创建Module"></a>创建Module</h3><p>创建Module分为在GOPATH中和在GOPATH外创建两种情况，在GOPATH中创建时，需要设置<code>GO111MODULE=on</code>。</p><p>创建module：<code>$ go mod init [module]</code></p><h3 id="使用Module"><a href="#使用Module" class="headerlink" title="使用Module"></a>使用Module</h3><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;Go1.11提供了实验性的module的功能。&lt;/p&gt;
-&lt;h3 id=&quot;创建Module&quot;&gt;&lt;a href=&quot;#创建Module&quot; class=&quot;headerlink&quot; title=&quot;创建Module&quot;&gt;&lt;/a&gt;创建Module&lt;/h3&gt;&lt;p&gt;创建Module分为在GOPA
-      
-    
-    </summary>
-    
-    
-      <category term="Go" scheme="https://blog.ache.fun/tags/Go/"/>
-    
-  </entry>
   
   <entry>
     <title>Ruby元编程学习笔记——法术手册</title>
@@ -513,6 +489,26 @@
       <category term="爬虫" scheme="https://blog.ache.fun/tags/%E7%88%AC%E8%99%AB/"/>
     
       <category term="Scrapy" scheme="https://blog.ache.fun/tags/Scrapy/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>我是阿扯，我现在慌的一批</title>
+    <link href="https://blog.ache.fun/2018/07/22/%E6%88%91%E6%98%AF%E9%98%BF%E6%89%AF%EF%BC%8C%E6%88%91%E7%8E%B0%E5%9C%A8%E6%85%8C%E7%9A%84%E4%B8%80%E6%89%B9/"/>
+    <id>https://blog.ache.fun/2018/07/22/我是阿扯，我现在慌的一批/</id>
+    <published>2018-07-22T06:02:13.000Z</published>
+    <updated>2018-08-18T15:52:36.836Z</updated>
+    
+    <content type="html"><![CDATA[<p>希望这是一个好的开始<br><a id="more"></a></p><p>和团队小伙伴一起约定以后要每周写一篇技术文章，每月写一篇读书笔记，差一篇请其他人每人喝一杯咖啡，这样的操作，让我慌的一批啊。<br><img src="/images/huang.jpg" alt=""><br>经过两天的折腾，在namesilo上买了域名，cloudflare上解析，最后在zoho上搞了域名邮箱，全套弄下来，第一年只要¥15不到，可以说是非常划算了。希望这是一个好的开始。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;希望这是一个好的开始&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="记录" scheme="https://blog.ache.fun/tags/%E8%AE%B0%E5%BD%95/"/>
     
   </entry>
   
