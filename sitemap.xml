@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.ache.fun/2018/12/16/Golang%E4%B8%AD%E7%9A%84Module/</loc>
+    
+    <lastmod>2018-12-17T01:17:27.156Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.ache.fun/2018/10/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AARuby-Gem/</loc>
+    
+    <lastmod>2018-12-17T01:17:15.937Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.ache.fun/2018/12/09/Ruby%E5%85%83%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E6%B3%95%E6%9C%AF%E6%89%8B%E5%86%8C/</loc>
     
     <lastmod>2018-12-11T14:00:45.427Z</lastmod>
@@ -40,13 +54,6 @@
     <loc>https://blog.ache.fun/2018/11/04/golang%E4%B8%AD%E4%BD%BF%E7%94%A8gRPC%E7%9A%84%E6%8B%A6%E6%88%AA%E5%99%A8/</loc>
     
     <lastmod>2018-11-05T01:12:23.146Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.ache.fun/2018/10/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AARuby-Gem/</loc>
-    
-    <lastmod>2018-11-04T08:14:51.311Z</lastmod>
     
   </url>
   
