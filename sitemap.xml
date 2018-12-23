@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.ache.fun/2018/12/23/Golang%E4%B8%AD%E7%9A%84Module/</loc>
+    
+    <lastmod>2018-12-23T09:20:09.655Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.ache.fun/christmas/index.html</loc>
     
     <lastmod>2018-12-20T08:40:45.893Z</lastmod>
